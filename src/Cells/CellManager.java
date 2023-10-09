@@ -51,10 +51,6 @@ public class CellManager {
 	public void drawCells(Graphics g) {
 		for (Cell cell : CellIndex.values()) {
 			cell.DrawCell(g);
-
-			if (Config.isDeveloperMode())
-				cell.DrawCellDeveloperMode(g);
-
 		}
 	}
 

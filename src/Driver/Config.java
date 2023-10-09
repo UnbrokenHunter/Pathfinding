@@ -5,6 +5,8 @@ import java.awt.Color;
 import Cells.Maze.Maze;
 import Cells.Maze.Randomized;
 import Cells.Maze.RecursiveBacktracker;
+import Cells.Maze.ReverseRecursiveBacktracker;
+import Pathfind.AStar;
 import Pathfind.Algorithm;
 import Pathfind.Floodfill;
 import Utilities.ColorInterpolator;
@@ -21,6 +23,7 @@ public final class Config {
     // ALGORITHM SETTINGS
     private static Algorithm ALGORITHM = new Floodfill();
     public static final Algorithm[] ALGORITHMS = new Algorithm[] {
+            new AStar(),
             new Floodfill(),
     };
     private static double ACTION_TIME = 0.05f;
@@ -30,6 +33,7 @@ public final class Config {
     public static final Maze[] MAZES = new Maze[] {
             new Randomized(),
             new RecursiveBacktracker(),
+            new ReverseRecursiveBacktracker(),
     };
     private static int SCREEN_WIDTH = 800;
     private static int SCREEN_HEIGHT = 400;

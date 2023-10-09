@@ -68,6 +68,11 @@ public class Cell {
 
 									"\n\tType: " + type);
 						debug = !debug;
+
+						if (type == CellType.Wall)
+							type = CellType.Path;
+						else if (type == CellType.Path)
+							type = CellType.Wall;
 					}
 				}
 			}
@@ -140,7 +145,7 @@ public class Cell {
 				Config.getCellWidth(),
 				Config.getCellHeight());
 
-		if (debug) {
+		if (debug && Config.isDeveloperMode()) {
 			DrawCellDeveloperMode(g);
 		}
 	}

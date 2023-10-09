@@ -1,5 +1,6 @@
 package Pathfind;
 
+import java.util.HashSet;
 import java.util.ArrayList;
 
 import Cells.Cell;
@@ -16,18 +17,23 @@ public abstract class Algorithm {
         return steps;
     }
 
-    public ArrayList<Cell> currentLayer = new ArrayList<Cell>();
-    public ArrayList<Cell> nextLayer = new ArrayList<Cell>();
+    // Use sets for faster lookup
+    public HashSet<Cell> currentLayer = new HashSet<Cell>();
+    public HashSet<Cell> nextLayer = new HashSet<Cell>();
+    public HashSet<Cell> exploredCells = new HashSet<Cell>();
 
-    public ArrayList<Cell> exploredCells = new ArrayList<Cell>();
-
-    // Indicies of the path
+    // Indexes of the path
     protected ArrayList<Cell> path = new ArrayList<Cell>();
 
-    protected CellManager cells = CellManager.Instance;
+    protected CellManager cells;
+    protected Cell start;
+    protected Cell end;
 
-    protected Cell start = cells.GetCellByIndex(cells.GetStartIndex());
-    protected Cell end = cells.GetCellByIndex(cells.GetEndIndex());
+    public void startAlgorithm() {
+        this.cells = CellManager.Instance;
+        this.start = cells.GetCellByIndex(cells.GetStartIndex());
+        this.end = cells.GetCellByIndex(cells.GetEndIndex());
+    }
 
     public abstract void Pathfind();
 
@@ -39,9 +45,8 @@ public abstract class Algorithm {
         Game.Instance.restart();
     }
 
-    public boolean HandleActionTime() {
+    public final boolean HandleActionTime() {
         if (Looper.GetTime() / steps > Config.getActionTime()) {
-
             Config.getAlgorithm().steps++;
             return true;
         }
@@ -49,7 +54,10 @@ public abstract class Algorithm {
     }
 
     public void reset() {
-
+        steps = 0;
+        currentLayer.clear();
+        nextLayer.clear();
+        currentLayer
+                .add(CellManager.Instance.GetCellByVector(Config.getStartCell()));
     }
-
 }

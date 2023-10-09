@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import Cells.CellManager;
 import Driver.Config;
 import Utilities.Looper;
 
@@ -22,10 +21,9 @@ public class PathfindingManager {
 	}
 
 	public void startPathfinder() {
-		Config.getAlgorithm().steps = 0;
-
-		Config.getAlgorithm().currentLayer
-				.add(CellManager.Instance.GetCellByIndex(CellManager.Instance.GetStartIndex()));
+		var algorithm = Config.getAlgorithm();
+		algorithm.reset();
+		algorithm.startAlgorithm();
 	}
 
 	public void pathfind() {

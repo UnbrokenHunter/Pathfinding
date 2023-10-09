@@ -10,7 +10,12 @@ import Utilities.Vector2;
 
 public class Floodfill extends Algorithm {
 
+    // Linked List to backtrack from
     private HashMap<Cell, Cell> predecessorMap = new HashMap<>();
+
+    private Vector2[] directions = {
+            Vector2.up, Vector2.down, Vector2.left, Vector2.right
+    };
 
     @Override
     public void Pathfind() {
@@ -25,45 +30,28 @@ public class Floodfill extends Algorithm {
         }
         currentLayer.addAll(nextLayer);
         nextLayer.clear();
-
-        // System.out.println("Pathfinding: " + currentLayer + "\n\tNext Layer: " +
-        // temp);
     }
 
     private void ExploreCell(Cell cell) {
-
         if (cell.IsEnd())
             EndFound(cell);
 
         exploredCells.add(cell);
 
-        // Search Up
-        AddToNextLayer(cell, ValidateDirection(cell, Vector2.up));
-
-        // Search Down
-        AddToNextLayer(cell, ValidateDirection(cell, Vector2.down));
-
-        // Search Left
-        AddToNextLayer(cell, ValidateDirection(cell, Vector2.left));
-
-        // Search Right
-        AddToNextLayer(cell, ValidateDirection(cell, Vector2.right));
+        for (Vector2 direction : directions) {
+            AddToNextLayer(cell, ValidateDirection(cell, direction));
+        }
     }
 
     private boolean AddToNextLayer(Cell currentCell, Cell neighboringCell) {
-        if (neighboringCell != null
-                && !neighboringCell.IsWall()
-                && !neighboringCell.IsStart()
-                && !nextLayer.contains(neighboringCell)
-                && !currentLayer.contains(neighboringCell)) {
+        if (neighboringCell == null || neighboringCell.IsWall() || neighboringCell.IsStart()) {
+            return false;
+        }
 
+        if (!nextLayer.contains(neighboringCell) && !currentLayer.contains(neighboringCell)) {
             neighboringCell.MarkAsExplored();
-            nextLayer.add(neighboringCell);
-
-            predecessorMap.put(neighboringCell, currentCell); // Store the predecessor
-            // System.out.println("Mapping " + neighboringCell.GraphPosition() + " to " +
-            // currentCell.GraphPosition());
-
+            nextLayer.add(neighboringCell); // assuming nextLayer is a HashSet or similar
+            predecessorMap.put(neighboringCell, currentCell);
             return true;
         }
         return false;
