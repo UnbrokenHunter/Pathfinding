@@ -16,7 +16,7 @@ public final class Config {
 
     // GENERAL SETTINGS
     private static boolean DEVELOPER_MODE = false;
-    public static final int FPS = 1000;
+    public static final int FPS = 120;
     private static Vector2 START_CELL = new Vector2(5, 5);
     private static Vector2 END_CELL = new Vector2(95, 45);
 

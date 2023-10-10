@@ -39,7 +39,7 @@ public class PathfindingManager {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Serif", Font.PLAIN, 26));
 
-		g.drawString("Time: " + Looper.GetTime(), 0, 20);
+		g.drawString("Time: " + Looper.getTime(), 0, 20);
 		g.drawString("Steps: " + Config.getAlgorithm().steps, 0, 40);
 
 	}

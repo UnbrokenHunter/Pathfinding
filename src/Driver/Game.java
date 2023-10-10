@@ -78,7 +78,7 @@ public class Game {
     }
 
     public void restart() {
-        Looper.ResetTime();
+        Looper.resetTime();
         ClickManager.Instance.reset();
         CreateButton();
         Config.getMaze().reset();

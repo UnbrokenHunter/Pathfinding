@@ -11,8 +11,23 @@ import Driver.Config;
 import Utilities.ColorInterpolator;
 import Utilities.Vector2;
 
+/**
+ * Represents a cell in a grid-based pathfinding simulation.
+ * <p>
+ * Each cell can be of one of the following types:
+ * - Path
+ * - Wall
+ * - Start
+ * - End
+ * </p>
+ * Additionally, the cell has the ability to listen to click events, mark itself
+ * as explored, and be part of the fastest route.
+ */
 public class Cell {
 
+	/**
+	 * Enum representing the various types of cells.
+	 */
 	private static enum CellType {
 		Path,
 		Wall,
@@ -20,19 +35,35 @@ public class Cell {
 		End
 	};
 
+	/** The type of this cell. */
 	private CellType type;
 
+	/** Position of the cell on screen. */
 	private Vector2 screenPos;
+	/** Position of the cell in the grid graph. */
 	private final Vector2 graphPos;
 
-	private boolean isFastestRoute = false; // Is this cell part of the fastest route
+	/** Indicates if this cell is part of the fastest route. */
+	private boolean isFastestRoute = false;
+
+	/** Indicates if this cell has been explored. */
 	private boolean isExplored = false;
 
-	// Explored Color Logic
+	/** Records the step count when this cell was explored. */
 	private int stepsWhenExplored = 0;
 
+	/** Index of this cell. */
 	public final int index;
+
+	/** Flag for debug mode. */
 	private boolean debug = false;
+
+	/**
+	 * Constructs a cell with a given graph position and index.
+	 *
+	 * @param graphPos The position of the cell in the grid graph.
+	 * @param index    The index of the cell.
+	 */
 
 	public Cell(Vector2 graphPos, int index) {
 
@@ -79,6 +110,10 @@ public class Cell {
 		});
 	}
 
+	/**
+	 * Determines and sets the type of this cell based on its position and the
+	 * game's configuration.
+	 */
 	public void setCellType() {
 		// If this cell's Coords are equal to the Starting Cell's Coords
 		if (graphPos.equals(Config.getStartCell())) {
@@ -98,12 +133,21 @@ public class Cell {
 
 	}
 
+	/**
+	 * Updates the screen position of the cell based on its graph position and
+	 * configuration.
+	 */
 	public void updateScreenPosition() {
 		screenPos = new Vector2(
 				graphPos.x * Config.getCellWidth(),
 				graphPos.y * Config.getCellHeight());
 	}
 
+	/**
+	 * Renders the cell using the given Graphics object.
+	 *
+	 * @param g The graphics context to use for drawing.
+	 */
 	protected void DrawCell(Graphics g) {
 
 		Color cellColor = null;
@@ -150,6 +194,12 @@ public class Cell {
 		}
 	}
 
+	/**
+	 * Draws additional developer-specific information for the cell.
+	 * This is activated when the application is in developer mode.
+	 *
+	 * @param g The graphics context to use for drawing.
+	 */
 	protected void DrawCellDeveloperMode(Graphics g) {
 
 		g.setColor(Color.BLUE);
@@ -194,10 +244,16 @@ public class Cell {
 		g.drawString("Status: " + isExplored, this.screenPos.x + increaseX, this.screenPos.y + (increaseY * count));
 	}
 
+	/**
+	 * Marks this cell as being part of the fastest path.
+	 */
 	public void MarkAsFastestPath() {
 		isFastestRoute = true;
 	}
 
+	/**
+	 * Marks this cell as explored and records the current algorithm step.
+	 */
 	public void MarkAsExplored() {
 
 		if (isExplored == false) {
@@ -206,26 +262,56 @@ public class Cell {
 		}
 	}
 
+	/**
+	 * Checks if this cell has been explored.
+	 * 
+	 * @return True if the cell has been explored, otherwise false.
+	 */
 	public boolean IsExplored() {
 		return isExplored;
 	}
 
+	/**
+	 * Checks if this cell is of type Path.
+	 * 
+	 * @return True if the cell is of type Path, otherwise false.
+	 */
 	public boolean IsPath() {
 		return type == CellType.Path;
 	}
 
+	/**
+	 * Checks if this cell is of type Wall.
+	 * 
+	 * @return True if the cell is of type Wall, otherwise false.
+	 */
 	public boolean IsWall() {
 		return type == CellType.Wall;
 	}
 
+	/**
+	 * Checks if this cell is of type Start.
+	 * 
+	 * @return True if the cell is of type Start, otherwise false.
+	 */
 	public boolean IsStart() {
 		return type == CellType.Start;
 	}
 
+	/**
+	 * Checks if this cell is of type End.
+	 * 
+	 * @return True if the cell is of type End, otherwise false.
+	 */
 	public boolean IsEnd() {
 		return type == CellType.End;
 	}
 
+	/**
+	 * Returns the position of the cell in the grid graph.
+	 * 
+	 * @return The graph position of the cell.
+	 */
 	public Vector2 GraphPosition() {
 		return graphPos;
 	}
