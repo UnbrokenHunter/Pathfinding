@@ -95,6 +95,7 @@ public class AStar extends Algorithm {
     @Override
     public void Pathfind() {
 
+        // Just makes it run 5 times per execution (Speeds up the animation)
         for (int i = 0; i < 5; i++) {
 
             if (openList.isEmpty()) {
