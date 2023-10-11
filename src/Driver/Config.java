@@ -23,8 +23,8 @@ public final class Config {
     // ALGORITHM SETTINGS
     private static Algorithm ALGORITHM = new Floodfill();
     public static final Algorithm[] ALGORITHMS = new Algorithm[] {
-            new AStar(),
             new Floodfill(),
+            new AStar(),
     };
     private static double ACTION_TIME = 0.05f;
 

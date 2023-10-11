@@ -2,6 +2,8 @@ package Pathfind;
 
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import Cells.Cell;
 import Cells.CellManager;
 import Driver.Config;
@@ -44,6 +46,9 @@ public abstract class Algorithm {
     /** Set of cells that have already been processed. */
     public HashSet<Cell> exploredCells = new HashSet<Cell>();
 
+    // Linked List to backtrack from
+    protected HashMap<Cell, Cell> predecessorMap = new HashMap<>();
+
     /** List of cell indexes forming the path. */
     protected ArrayList<Cell> path = new ArrayList<Cell>();
 
@@ -77,7 +82,7 @@ public abstract class Algorithm {
      * @param cell The end cell that was found.
      */
     public void EndFound(Cell cell) {
-        System.out.println("End found at: " + cell.GraphPosition());
+        System.out.println("End found at: " + cell.GraphPosition() + "\n\t" + path.toString());
     }
 
     /**
@@ -106,6 +111,8 @@ public abstract class Algorithm {
      */
     public void reset() {
         steps = 0;
+        path.clear();
+        predecessorMap.clear();
         currentLayer.clear();
         nextLayer.clear();
         currentLayer.add(CellManager.Instance.GetCellByVector(Config.getStartCell()));

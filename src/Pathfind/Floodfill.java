@@ -1,7 +1,6 @@
 package Pathfind;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import Cells.Cell;
@@ -9,9 +8,6 @@ import Driver.Config;
 import Utilities.Vector2;
 
 public class Floodfill extends Algorithm {
-
-    // Linked List to backtrack from
-    private HashMap<Cell, Cell> predecessorMap = new HashMap<>();
 
     private Vector2[] directions = {
             Vector2.up, Vector2.down, Vector2.left, Vector2.right
